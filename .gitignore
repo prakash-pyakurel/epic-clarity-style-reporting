@@ -1,0 +1,27 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
+python/maps/*.json
+
+# Power BI temporary files
+*.pbix.tmp
+~$*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large data files
+data/raw/synthea/*.csv
+
+# Private docs (interview prep, internal notes)
+docs/lessons-learned.md
+docs/project-status.md
+
+# IDE files
+.vscode/
+.idea/
+*.swp

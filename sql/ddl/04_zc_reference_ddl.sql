@@ -1,0 +1,483 @@
+-- ================================================================
+-- 04_zc_reference_ddl.sql
+-- ================================================================
+-- Project: Epic Clarity-Style Clinical Reporting & Analytics Platform
+-- Phase:   1.5 - ZC_ Reference Table Extension
+-- Purpose: Create the 47 additional ZC_ lookup tables identified by
+--          the schema audit. Every _C category column in the 22
+--          base tables references a ZC_ lookup; Phase 1 built 7,
+--          this file adds the remaining 47 (54 ZC_ tables total).
+--
+-- Design:  Each ZC_ table is the standard lean 3-column shape,
+--          matching the 7 ZC_ tables built in Phase 1:
+--            <CONCEPT>_C  INT          NOT NULL  (primary key)
+--            NAME         VARCHAR(100) NOT NULL
+--            ABBR         VARCHAR(20)  NULL
+--
+-- Run order: After 01-03 (base tables). Tables created empty;
+--            population happens in ETL Stage 2.1.
+-- ================================================================
+
+USE EpicClaritySim;
+GO
+
+-- ============================================================
+-- PATIENT demographics lookups
+-- ============================================================
+
+CREATE TABLE ZC_RACE (
+    RACE_C   INT          NOT NULL,
+    NAME     VARCHAR(100) NOT NULL,
+    ABBR     VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_RACE PRIMARY KEY (RACE_C)
+);
+GO
+
+CREATE TABLE ZC_ETHNICITY (
+    ETHNICITY_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ETHNICITY PRIMARY KEY (ETHNICITY_C)
+);
+GO
+
+CREATE TABLE ZC_LANGUAGE (
+    PRIMARY_LANGUAGE_C INT          NOT NULL,
+    NAME               VARCHAR(100) NOT NULL,
+    ABBR               VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_LANGUAGE PRIMARY KEY (PRIMARY_LANGUAGE_C)
+);
+GO
+
+CREATE TABLE ZC_COUNTRY (
+    COUNTRY_C INT          NOT NULL,
+    NAME      VARCHAR(100) NOT NULL,
+    ABBR      VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_COUNTRY PRIMARY KEY (COUNTRY_C)
+);
+GO
+
+-- ============================================================
+-- PAT_ENC / PAT_ENC_HSP encounter lookups
+-- ============================================================
+
+CREATE TABLE ZC_ENC_TYPE (
+    ENC_TYPE_C INT          NOT NULL,
+    NAME       VARCHAR(100) NOT NULL,
+    ABBR       VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ENC_TYPE PRIMARY KEY (ENC_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_APPT_STATUS (
+    APPT_STATUS_C INT          NOT NULL,
+    NAME          VARCHAR(100) NOT NULL,
+    ABBR          VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_APPT_STATUS PRIMARY KEY (APPT_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_CANCEL_REASON (
+    CANCEL_REASON_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_CANCEL_REASON PRIMARY KEY (CANCEL_REASON_C)
+);
+GO
+
+CREATE TABLE ZC_VISIT_TYPE (
+    VISIT_TYPE_C INT          NOT NULL,
+    NAME         VARCHAR(100) NOT NULL,
+    ABBR         VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_VISIT_TYPE PRIMARY KEY (VISIT_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_LEVEL_OF_SERVICE (
+    LEVEL_OF_SERVICE_C INT          NOT NULL,
+    NAME               VARCHAR(100) NOT NULL,
+    ABBR               VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_LEVEL_OF_SERVICE PRIMARY KEY (LEVEL_OF_SERVICE_C)
+);
+GO
+
+CREATE TABLE ZC_HOSP_ADMSN_TYPE (
+    HOSP_ADMSN_TYPE_C INT          NOT NULL,
+    NAME              VARCHAR(100) NOT NULL,
+    ABBR              VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_HOSP_ADMSN_TYPE PRIMARY KEY (HOSP_ADMSN_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_ADM_SOURCE (
+    ADM_SOURCE_C INT          NOT NULL,
+    NAME         VARCHAR(100) NOT NULL,
+    ABBR         VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ADM_SOURCE PRIMARY KEY (ADM_SOURCE_C)
+);
+GO
+
+CREATE TABLE ZC_PAT_CLASS (
+    ADT_PAT_CLASS_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PAT_CLASS PRIMARY KEY (ADT_PAT_CLASS_C)
+);
+GO
+
+CREATE TABLE ZC_DISCH_DISP (
+    DISCH_DISP_C INT          NOT NULL,
+    NAME         VARCHAR(100) NOT NULL,
+    ABBR         VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_DISCH_DISP PRIMARY KEY (DISCH_DISP_C)
+);
+GO
+
+CREATE TABLE ZC_DISCH_DEST (
+    DISCH_DEST_C INT          NOT NULL,
+    NAME         VARCHAR(100) NOT NULL,
+    ABBR         VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_DISCH_DEST PRIMARY KEY (DISCH_DEST_C)
+);
+GO
+
+CREATE TABLE ZC_HOSP_SERV (
+    HOSP_SERV_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_HOSP_SERV PRIMARY KEY (HOSP_SERV_C)
+);
+GO
+
+CREATE TABLE ZC_ACCOMMODATION (
+    ACCOMMODATION_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ACCOMMODATION PRIMARY KEY (ACCOMMODATION_C)
+);
+GO
+
+-- ============================================================
+-- PROBLEM_LIST lookups
+-- ============================================================
+
+CREATE TABLE ZC_PROBLEM_STATUS (
+    PROBLEM_STATUS_C INT          NOT NULL,
+    NAME             VARCHAR(100) NOT NULL,
+    ABBR             VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PROBLEM_STATUS PRIMARY KEY (PROBLEM_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_PRIORITY (
+    PRIORITY_C INT          NOT NULL,
+    NAME       VARCHAR(100) NOT NULL,
+    ABBR       VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PRIORITY PRIMARY KEY (PRIORITY_C)
+);
+GO
+
+-- ============================================================
+-- ORDER_MED / ORDER_PROC / LAB_RESULTS lookups
+-- ============================================================
+
+CREATE TABLE ZC_DOSE_UNIT (
+    DOSE_UNIT_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_DOSE_UNIT PRIMARY KEY (DOSE_UNIT_C)
+);
+GO
+
+CREATE TABLE ZC_FREQUENCY (
+    FREQUENCY_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_FREQUENCY PRIMARY KEY (FREQUENCY_C)
+);
+GO
+
+CREATE TABLE ZC_ROUTE (
+    ROUTE_C INT          NOT NULL,
+    NAME    VARCHAR(100) NOT NULL,
+    ABBR    VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ROUTE PRIMARY KEY (ROUTE_C)
+);
+GO
+
+CREATE TABLE ZC_ORDER_STATUS (
+    ORDER_STATUS_C INT          NOT NULL,
+    NAME           VARCHAR(100) NOT NULL,
+    ABBR           VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ORDER_STATUS PRIMARY KEY (ORDER_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_ORDER_TYPE (
+    ORDER_TYPE_C INT          NOT NULL,
+    NAME         VARCHAR(100) NOT NULL,
+    ABBR         VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ORDER_TYPE PRIMARY KEY (ORDER_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_DISCONTINUED_REASON (
+    DISCONTINUED_REASON_C INT          NOT NULL,
+    NAME                  VARCHAR(100) NOT NULL,
+    ABBR                  VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_DISCONTINUED_REASON PRIMARY KEY (DISCONTINUED_REASON_C)
+);
+GO
+
+CREATE TABLE ZC_PROC_CATEGORY (
+    PROC_CATEGORY_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PROC_CATEGORY PRIMARY KEY (PROC_CATEGORY_C)
+);
+GO
+
+CREATE TABLE ZC_RESULT_STATUS (
+    RESULT_STATUS_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_RESULT_STATUS PRIMARY KEY (RESULT_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_SPECIMEN_TYPE (
+    SPECIMEN_TYPE_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_SPECIMEN_TYPE PRIMARY KEY (SPECIMEN_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_BODY_SITE (
+    BODY_SITE_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_BODY_SITE PRIMARY KEY (BODY_SITE_C)
+);
+GO
+
+CREATE TABLE ZC_LATERALITY (
+    LATERALITY_C INT          NOT NULL,
+    NAME         VARCHAR(100) NOT NULL,
+    ABBR         VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_LATERALITY PRIMARY KEY (LATERALITY_C)
+);
+GO
+
+CREATE TABLE ZC_ORD_VALUE (
+    ORD_VALUE_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ORD_VALUE PRIMARY KEY (ORD_VALUE_C)
+);
+GO
+
+CREATE TABLE ZC_ABNORMAL_FLAG (
+    ABNORMAL_FLAG_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ABNORMAL_FLAG PRIMARY KEY (ABNORMAL_FLAG_C)
+);
+GO
+
+-- ============================================================
+-- Reference layer lookups (CLARITY_DEP / LOC / PAYOR)
+-- ============================================================
+
+CREATE TABLE ZC_DEPT_TYPE (
+    DEPT_TYPE_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_DEPT_TYPE PRIMARY KEY (DEPT_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_LOC_TYPE (
+    LOC_TYPE_C INT          NOT NULL,
+    NAME       VARCHAR(100) NOT NULL,
+    ABBR       VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_LOC_TYPE PRIMARY KEY (LOC_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_TIME_ZONE (
+    TIME_ZONE_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_TIME_ZONE PRIMARY KEY (TIME_ZONE_C)
+);
+GO
+
+CREATE TABLE ZC_FINANCIAL_CLASS (
+    FINANCIAL_CLASS_C INT          NOT NULL,
+    NAME              VARCHAR(100) NOT NULL,
+    ABBR              VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_FINANCIAL_CLASS PRIMARY KEY (FINANCIAL_CLASS_C)
+);
+GO
+
+CREATE TABLE ZC_PAYOR_GROUP (
+    PAYOR_GROUP_C INT          NOT NULL,
+    NAME          VARCHAR(100) NOT NULL,
+    ABBR          VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PAYOR_GROUP PRIMARY KEY (PAYOR_GROUP_C)
+);
+GO
+
+-- ============================================================
+-- Financial layer lookups (HSP_ACCOUNT / CHARGE / CLAIM /
+-- PAYMENT / ARPB_TRANSACTIONS)
+-- ============================================================
+
+CREATE TABLE ZC_ACCT_BASECLS (
+    ACCT_BASECLS_HA_C INT          NOT NULL,
+    NAME              VARCHAR(100) NOT NULL,
+    ABBR              VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ACCT_BASECLS PRIMARY KEY (ACCT_BASECLS_HA_C)
+);
+GO
+
+CREATE TABLE ZC_ACCT_STATUS (
+    ACCT_STATUS_C INT          NOT NULL,
+    NAME          VARCHAR(100) NOT NULL,
+    ABBR          VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_ACCT_STATUS PRIMARY KEY (ACCT_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_BILLING_STATUS (
+    BILLING_STATUS_C INT          NOT NULL,
+    NAME             VARCHAR(100) NOT NULL,
+    ABBR             VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_BILLING_STATUS PRIMARY KEY (BILLING_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_CHARGE_STATUS (
+    CHARGE_STATUS_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_CHARGE_STATUS PRIMARY KEY (CHARGE_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_REVERSAL_REASON (
+    REVERSAL_REASON_C INT          NOT NULL,
+    NAME              VARCHAR(100) NOT NULL,
+    ABBR              VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_REVERSAL_REASON PRIMARY KEY (REVERSAL_REASON_C)
+);
+GO
+
+CREATE TABLE ZC_PLACE_OF_SERVICE (
+    PLACE_OF_SERVICE_C INT          NOT NULL,
+    NAME               VARCHAR(100) NOT NULL,
+    ABBR               VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PLACE_OF_SERVICE PRIMARY KEY (PLACE_OF_SERVICE_C)
+);
+GO
+
+CREATE TABLE ZC_BILL_TYPE (
+    BILL_TYPE_C INT          NOT NULL,
+    NAME        VARCHAR(100) NOT NULL,
+    ABBR        VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_BILL_TYPE PRIMARY KEY (BILL_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_CLAIM_STATUS (
+    CLAIM_STATUS_C INT          NOT NULL,
+    NAME           VARCHAR(100) NOT NULL,
+    ABBR           VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_CLAIM_STATUS PRIMARY KEY (CLAIM_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_CLAIM_TYPE (
+    CLAIM_TYPE_C INT          NOT NULL,
+    NAME         VARCHAR(100) NOT NULL,
+    ABBR         VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_CLAIM_TYPE PRIMARY KEY (CLAIM_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_CLAIM_SEQUENCE (
+    CLAIM_SEQUENCE_C INT          NOT NULL,
+    NAME             VARCHAR(100) NOT NULL,
+    ABBR             VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_CLAIM_SEQUENCE PRIMARY KEY (CLAIM_SEQUENCE_C)
+);
+GO
+
+CREATE TABLE ZC_REJECTION_REASON (
+    REJECTION_REASON_C INT          NOT NULL,
+    NAME               VARCHAR(100) NOT NULL,
+    ABBR               VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_REJECTION_REASON PRIMARY KEY (REJECTION_REASON_C)
+);
+GO
+
+CREATE TABLE ZC_APPEAL_STATUS (
+    APPEAL_STATUS_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_APPEAL_STATUS PRIMARY KEY (APPEAL_STATUS_C)
+);
+GO
+
+CREATE TABLE ZC_PAYMENT_SOURCE (
+    PAYMENT_SOURCE_C INT          NOT NULL,
+    NAME             VARCHAR(100) NOT NULL,
+    ABBR             VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PAYMENT_SOURCE PRIMARY KEY (PAYMENT_SOURCE_C)
+);
+GO
+
+CREATE TABLE ZC_PAYMENT_TYPE (
+    PAYMENT_TYPE_C INT          NOT NULL,
+    NAME           VARCHAR(100) NOT NULL,
+    ABBR           VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PAYMENT_TYPE PRIMARY KEY (PAYMENT_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_PAYMENT_METHOD (
+    PAYMENT_METHOD_C INT          NOT NULL,
+    NAME             VARCHAR(100) NOT NULL,
+    ABBR             VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_PAYMENT_METHOD PRIMARY KEY (PAYMENT_METHOD_C)
+);
+GO
+
+CREATE TABLE ZC_TX_TYPE (
+    TX_TYPE_C INT          NOT NULL,
+    NAME      VARCHAR(100) NOT NULL,
+    ABBR      VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_TX_TYPE PRIMARY KEY (TX_TYPE_C)
+);
+GO
+
+CREATE TABLE ZC_DENIAL_REASON (
+    DENIAL_REASON_C INT          NOT NULL,
+    NAME            VARCHAR(100) NOT NULL,
+    ABBR            VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_DENIAL_REASON PRIMARY KEY (DENIAL_REASON_C)
+);
+GO
+
+CREATE TABLE ZC_VOID_REASON (
+    VOID_REASON_C INT          NOT NULL,
+    NAME          VARCHAR(100) NOT NULL,
+    ABBR          VARCHAR(20)  NULL,
+    CONSTRAINT PK_ZC_VOID_REASON PRIMARY KEY (VOID_REASON_C)
+);
+GO
+
+-- ================================================================
+-- End of 04_zc_reference_ddl.sql  -  47 ZC_ tables created
+-- ================================================================
