@@ -1,4 +1,4 @@
-# Epic Clarity-Style Clinical Reporting & Analytics Platform
+# 🏥Epic Clarity-Style Clinical Reporting & Analytics Platform
 
 A three-page Power BI dashboard built on a SQL Server data model I designed
 to look like Epic's Clarity reporting environment. Covers inpatient quality,
